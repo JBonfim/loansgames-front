@@ -28,11 +28,11 @@ constructor(private http: HttpClient) {
   }
 
   putGamePerson(game: GamePerson) {
-    return this.http.put(`${this.baseURL}`, game);
+    return this.http.put(`${this.baseURL}`, game, { headers: this.tokenHeader });
   }
 
   deleteGamePerson(id: number) {
-    return this.http.delete(`${this.baseURL}/${id}`);
+    return this.http.delete(`${this.baseURL}/${id}`, { headers: this.tokenHeader });
   }
 
   getAllGame(): Observable<GamePersonResponseView[]> {

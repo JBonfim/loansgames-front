@@ -27,11 +27,11 @@ constructor(private http: HttpClient) {
   }
 
   putPerson(person: Person) {
-    return this.http.put(`${this.baseURL}`, person);
+    return this.http.put(`${this.baseURL}`, person, { headers: this.tokenHeader });
   }
 
   deletePerson(id: number) {
-    return this.http.delete(`${this.baseURL}/${id}`);
+    return this.http.delete(`${this.baseURL}/${id}`, { headers: this.tokenHeader });
   }
 
 }

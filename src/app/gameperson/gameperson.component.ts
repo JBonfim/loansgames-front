@@ -119,7 +119,7 @@ export class GamepersonComponent implements OnInit {
     }
 
     confirmeDelete(template: any) {
-      this.GameService.deleteGame(this.game.id).subscribe(
+      this.GamePersonService.deleteGamePerson(this.game.id).subscribe(
         () => {
             template.hide();
             this.getGameLoans();
