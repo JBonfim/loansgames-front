@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'persons', component: PersonsComponent, canActivate: [AuthGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   { path: 'gamepersons', component: GamepersonComponent, canActivate: [AuthGuard] },
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full', canActivate: [AuthGuard]},
   // Caso seja digitado qualuqer coisa (**) direciono para o dashboard
   { path: '**', redirectTo: 'dashboard', pathMatch: 'full'},
 ];

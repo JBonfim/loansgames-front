@@ -34,8 +34,8 @@ constructor(private http: HttpClient) {
     return this.http.delete(`${this.baseURL}/${id}`);
   }
 
-  getAllGame(): Observable<GamePerson[]> {
-    return this.http.get<GamePerson[]>(this.baseURL, { headers: this.tokenHeader });
+  getAllGame(): Observable<GamePersonResponseView[]> {
+    return this.http.get<GamePersonResponseView[]>(this.baseURL, { headers: this.tokenHeader });
   }
 
 

@@ -1,3 +1,188 @@
-<p>
-  gameperson works!
-</p>
+
+<app-titulo [titulo]="titulo"></app-titulo>
+<!-- o 'd-flex' combinado com o 'mr-auto' faz com que o elemento com o mr-auto ocupe todo o lado direito obrigando o outro elemento da mesma linha ficar a esquerda -->
+<div class="d-flex">
+  <div class="form-inline mr-auto">
+    <div class="form-group mb-2">
+      <input type="text" class="form-control mr-2" placeholder="buscar"
+      [(ngModel)]="filtroLista">
+    </div>
+  </div>
+  <div>
+    <button class="btn btn-outline-primary" (click)="newGame(template)">
+      <!-- &nbsp - gera um espaço de 1 caratere-->
+      <i class="fa fa-plus-circle"></i>&nbsp;
+      Cadastrar
+    </button>
+  </div>
+
+</div>
+<h3>Filtro:{{filtroLista}}</h3>
+<table class="table table-striped">
+  <thead class="thead-light">
+    <tr>
+    <th>#</th>
+    <th>Nome Pessoa</th>
+    <th>Telefone</th>
+    <th>Jogo</th>
+    <th>Status</th>
+    <th>Opções</th>
+  </tr>
+</thead>
+<tbody>
+  <tr *ngFor="let game of gamesFiltrados">
+    
+    <td>{{game.id}}</td>
+    <td>{{game.person.name}}</td>
+    <td>{{game.person.phone}}</td>
+    <td>{{game.game.descryption}}</td>
+    <td>
+      <div *ngIf="!game.isActive">
+        Devolvido
+      </div> 
+      <div *ngIf="game.isActive">
+          Emprestado
+      </div> 
+    </td>
+    <td>
+      <div class="btn-group">
+        <div *ngIf="!game.isActive">
+          <button class="btn btn-sm btn-success disabled " disabled ='false'
+            tooltip="Editar" (click)="editarGame(game, template)">
+            <i class="fa fa-edit"></i>
+          </button>
+          <button class="btn btn-sm btn-danger disabled" disabled ='false'
+          tooltip="Excluir" (click)="excluirGame(game, confirm)">
+            <i class="fa fa-eraser"></i>
+          </button>
+        </div> 
+        <div *ngIf="game.isActive">
+          <button class="btn btn-sm btn-success"
+          tooltip="Editar" (click)="editarGame(game, template)">
+          <i class="fa fa-edit"></i>
+        </button>
+        <button class="btn btn-sm btn-danger"
+         tooltip="Excluir" (click)="excluirGame(game, confirm)">
+          <i class="fa fa-eraser"></i>
+        </button>
+        </div>
+        <!-- tooltip é uma função do bootstrap -->
+        
+    </div>
+  </td>
+</tr>
+</tbody>
+<tfoot *ngIf="!games">
+  <tr>
+    <td colspan="7" class="text-center">
+      <h4>Nenhum Emprestimmo realizado</h4>
+    </td>
+  </tr>
+</tfoot>
+</table>
+
+<!-- Meu modal -->
+<div bsModal #template="bs-modal" class="modal fade" tabindex="-1"
+role="dialog" aria-labelledby="dialog-sizes-name1">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 id="dialog-sizes-name1" class="modal-title pull-left">Cadastro</h4>
+      <button type="button" class="close pull-right" (click)="template.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <!-- BODY DO MODAL -->
+    <div class="modal-body">
+      <!-- Formulário -->
+      <form [formGroup]="registerForm">
+        <div class="form-row">
+          <div class="form-group col-md-12">
+              <label for="exampleFormControlSelect1">Selecione a Pessoa</label>
+              <select formControlName="idPerson" onselect="" class="form-control" >
+                <option  [ngValue]="null">Selecione</option>
+                <option *ngFor="let person of personsFiltrados" [ngValue]="person.id">{{person.name}}</option>
+              </select>
+              <div *ngIf="registerForm.get('idPerson').hasError('required') && registerForm.get('idPerson').touched" class="invalid-feedback">A Pessoa é obrigatório</div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="exampleFormControlSelect1">Selecione o Jogo</label>
+            <select formControlName="idGame"  class="form-control" >
+                <option  [ngValue]="null">Selecione</option>
+                <option *ngFor="let g of gamerFiltrados" [ngValue]="g.id">{{g.descryption}}</option>
+              
+              
+            </select>
+            <div *ngIf="registerForm.get('idGame').hasError('required') && registerForm.get('idGame').touched" class="invalid-feedback">O Jogo é obrigatório</div>
+          </div>
+          
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12" *ngIf="isEdit" >
+            <label class="control-label col-md-4">Status:</label>
+            <br/>
+            <div>
+              
+              <label for="emp" class="radio-inline">
+                <input id="emp" [checked]="true" name="isActive" type="radio" [value]="true" formControlName="isActive"> 
+                Emprestar</label>
+            </div>
+            <div>
+              
+              <label for="dev" class="radio-inline">
+                <input type="radio" id="dev" [value]="false" name="isActive" formControlName="isActive"> 
+                Devolver</label>
+            </div>
+           
+            
+            <div *ngIf="registerForm.get('isActive').invalid " class="invalid-feedback"> 
+              O Status é obrigatório 
+            </div>	
+       </div>
+        </div>
+        
+      </form>
+    </div>
+    <!-- FOOTER DO MODAL-->
+    <div class="modal-footer d-flex">
+      <button class="btn btn-secondary" (click)="template.hide()">
+        Fechar
+      </button>
+     
+        <button class="btn btn-primary ml-auto" [disabled]="!registerForm.valid" (click)="salvarAlteracao(template)">
+          Salvar Alterações
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div bsModal #confirm="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+	<div class="modal-dialog modal-sm">
+  		<div class="modal-content">
+    		<div class="modal-header">
+      			<h4 class="modal-title pull-left">
+        			Excluir Jogo
+      			</h4>
+      			<button type="button" class="close pull-right" (click)="confirm.hide()" aria-label="Close">
+        			<span aria-hidden="true">&times;</span>
+      			</button>
+    		</div>
+    		<div class="modal-body">
+      			<p>{{bodyDeletargame}}</p>
+    		</div>
+    		<div class="modal-footer btn-group d-flex">
+      			<button type="button" class="btn btn-outline-primary" (click)="confirm.hide()">
+        			CENCELAR
+      			</button>
+      			<button type="button" class="btn btn-outline-danger" (click)="confirmeDelete(confirm)">
+          			DELETAR
+        		</button>
+    		</div>
+  		</div>
+	</div>
+</div>
+
