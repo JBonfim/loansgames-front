@@ -1,3 +1,48 @@
-<p>
-  dashboard works!
-</p>
+
+<app-titulo [titulo]="titulo"></app-titulo>
+<!-- o 'd-flex' combinado com o 'mr-auto' faz com que o elemento com o mr-auto ocupe todo o lado direito obrigando o outro elemento da mesma linha ficar a esquerda -->
+<div class="d-flex">
+  <div class="form-inline mr-auto">
+    <div class="form-group mb-2">
+      <input type="text" class="form-control mr-2" placeholder="buscar"
+      [(ngModel)]="filtroLista">
+    </div>
+  </div>
+
+</div>
+<h3>Filtro:{{filtroLista}}</h3>
+<table class="table table-striped">
+  <thead class="thead-light">
+    <tr>
+    <th>#</th>
+    <th>Nome Pessoa</th>
+    <th>Telefone</th>
+    <th>Jogo</th>
+    <th>Status</th>
+  </tr>
+</thead>
+<tbody>
+  <tr *ngFor="let game of gamesFiltrados">
+    
+    <td>{{game.id}}</td>
+    <td>{{game.person.name}}</td>
+    <td>{{game.person.phone}}</td>
+    <td>{{game.game.descryption}}</td>
+    <td>
+      <div *ngIf="!game.isActive">
+        Devolvido
+      </div> 
+      <div *ngIf="game.isActive">
+          Emprestado
+      </div> 
+    </td>
+</tr>
+</tbody>
+<tfoot *ngIf="!games">
+  <tr>
+    <td colspan="7" class="text-center">
+      <h4>Nenhum Emprestimmo realizado</h4>
+    </td>
+  </tr>
+</tfoot>
+</table>

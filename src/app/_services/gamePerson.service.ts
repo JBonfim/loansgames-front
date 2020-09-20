@@ -10,6 +10,7 @@ import { GamePersonResponseView } from '../_models/GamePersonResponseView';
 })
 export class GamePersonService {
   baseURL = 'http://localhost:5000/api/gamepersonalloans';
+  baseUrlDf  = 'http://localhost:5000'
   tokenHeader: HttpHeaders;
 
 constructor(private http: HttpClient) {
@@ -36,6 +37,10 @@ constructor(private http: HttpClient) {
 
   getAllGame(): Observable<GamePersonResponseView[]> {
     return this.http.get<GamePersonResponseView[]>(this.baseURL, { headers: this.tokenHeader });
+  }
+
+  getSelectAllAsyncIsStatusIsActive(): Observable<GamePersonResponseView[]> {
+    return this.http.get<GamePersonResponseView[]>(`${this.baseUrlDf}/statusisactive`, { headers: this.tokenHeader });
   }
 
 

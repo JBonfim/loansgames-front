@@ -24,6 +24,7 @@ import { GamesComponent } from './games/games.component';
 import { GamepersonComponent } from './gameperson/gameperson.component';
 import { NavComponent } from './nav/nav.component';
 import { TituloComponent } from './_shared/titulo/titulo.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { UserComponent } from './user/user.component';
 import { LoginComponent } from './user/login/login.component';
@@ -39,7 +40,8 @@ import { RegistrationComponent } from './user/registration/registration.componen
       UserComponent,
       LoginComponent,
       RegistrationComponent,
-      TituloComponent
+      TituloComponent,
+      DashboardComponent
       
    ],
   imports: [
