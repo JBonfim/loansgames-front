@@ -25,11 +25,18 @@ constructor(private http: HttpClient) {
   }
 
   putGame(game: Game) {
-    return this.http.put(`${this.baseURL}/${game.id}`, game);
+    return this.http.put(`${this.baseURL}`, game);
   }
 
   deleteGame(id: number) {
     return this.http.delete(`${this.baseURL}/${id}`);
   }
+
+  getAllGame(): Observable<Game[]> {
+    return this.http.get<Game[]>(this.baseURL, { headers: this.tokenHeader });
+  }
+
+  
+
 
 }

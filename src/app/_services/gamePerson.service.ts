@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Game } from '../_models/Game';
 import { GamePerson } from '../_models/GamePerson';
 import { GamePersonResponseView } from '../_models/GamePersonResponseView';
 
@@ -26,11 +27,16 @@ constructor(private http: HttpClient) {
   }
 
   putGamePerson(game: GamePerson) {
-    return this.http.put(`${this.baseURL}/${game.id}`, game);
+    return this.http.put(`${this.baseURL}`, game);
   }
 
   deleteGamePerson(id: number) {
     return this.http.delete(`${this.baseURL}/${id}`);
   }
+
+  getAllGame(): Observable<GamePerson[]> {
+    return this.http.get<GamePerson[]>(this.baseURL, { headers: this.tokenHeader });
+  }
+
 
 }
