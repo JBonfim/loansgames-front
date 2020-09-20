@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class NavComponent implements OnInit {
 
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     private router: Router,
     private toastr: ToastrService
   ) { }

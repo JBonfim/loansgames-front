@@ -18,14 +18,16 @@ constructor(private http: HttpClient) {
     return this.http.get<Person>('${this.baseURL}/${id}');
   }
 
- 
+  getAllPerson(): Observable<Person[]> {
+    return this.http.get<Person[]>(this.baseURL, { headers: this.tokenHeader });
+  }
 
   postPerson(person: Person) {
     return this.http.post(this.baseURL, person, { headers: this.tokenHeader });
   }
 
   putPerson(person: Person) {
-    return this.http.put(`${this.baseURL}/${person.id}`, person);
+    return this.http.put(`${this.baseURL}`, person);
   }
 
   deletePerson(id: number) {
